@@ -9,6 +9,10 @@ import requests
 import sys
 from config import CALENDAR_URL
 
+abspath = os.path.abspath(__file__)
+dname = os.path.dirname(abspath)
+os.chdir(dname)
+
 TZ = pytz.timezone("Europe/Lisbon")
 if "-u" in sys.argv:
     cal_text = requests.get(CALENDAR_URL).text
