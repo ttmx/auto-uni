@@ -27,6 +27,10 @@ def pretty_print_time_until(time):
         return str(hours) + " hours"
 
 
+def pretty_print_current_class(cclass):
+    return cclass.decoded("summary").decode() + " ends in " + pretty_print_time_until(cclass.decoded("dtend")) + "."
+
+
 # Grab calendar from file
 cal_text = open("./calendar.ics").read()
 cal = icalendar.Calendar.from_ical(cal_text)
@@ -46,9 +50,11 @@ if events[0].decoded("dtstart") > now:
     print(events[0].decoded("summary").decode() + " in " +
           pretty_print_time_until(events[0].decoded("dtstart")))
 elif len(events) >= 2:
-    print(events[0].decoded("summary").decode() + " ends in " +
-          pretty_print_time_until(events[0].decoded("dtend")) +
-          ". " + events[1].decoded("summary").decode() + " after a " + pretty_print_time_until(events[1].decoded("dtstart") - events[0].decoded("dtend") + now) + " break.")
+    if events[1].decoded("dtstart")-events[0].decoded("dtend") == 0:
+        print(pretty_print_current_class(
+            events[0]) + events[1].decoded("summary").decode() + " afterwards.")
+    else:
+        print(pretty_print_current_class(events[0]) + events[1].decoded("summary").decode() + " after a " +
+              pretty_print_time_until(events[1].decoded("dtstart") - events[0].decoded("dtend") + now) + " break.")
 else:
-    print(events[0].decoded("summary").decode() + " ends in " +
-          pretty_print_time_until(events[0].decoded("dtend")))
+    print(pretty_print_current_class(events[0]))
