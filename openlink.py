@@ -33,6 +33,7 @@ def parse_desc(text):
         text = text.replace("/j/","/join?action=join&confno=")
         text = text.replace("?pwd","&pwd")
         text = text.replace("https://","zoommtg://")
+        text = text[0:text.find("#")]
     urireg = re.compile("(http[s]?|zoommtg)://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+")
     if urireg.match(text):
         if text.startswith("http"):
