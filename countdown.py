@@ -1,3 +1,4 @@
+#!/bin/python
 import icalendar
 import recurring_ical_events as recurring
 import os
