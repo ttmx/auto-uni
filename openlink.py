@@ -1,7 +1,7 @@
 import icalendar
 import pytz
 import recurring_ical_events
-from datetime import datetime, date
+from datetime import datetime, date,timedelta
 import re
 import os
 from rofi import rofi
@@ -33,7 +33,7 @@ def parse_desc(text):
         text = text.replace("/j/","/join?action=join&confno=")
         text = text.replace("?pwd","&pwd")
         text = text.replace("https://","zoommtg://")
-        text = text[0:text.find("#")]
+        text = text.split("#")[0]
     urireg = re.compile("(http[s]?|zoommtg)://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+")
     if urireg.match(text):
         if text.startswith("http"):
@@ -54,6 +54,7 @@ for event in events:
     if uri_type:
         classes.append([event["SUMMARY"] , uri_type, desc])
 
+print(classes)
 
 if len(classes) > 0:
     k,i,toopen = rofi("Go to",list(map(lambda a: " ".join(a[:-1]) + " " + a[-1].split("://")[1],classes)))

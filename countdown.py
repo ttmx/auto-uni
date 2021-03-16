@@ -37,6 +37,7 @@ cal_text = open("./calendar.ics").read()
 cal = icalendar.Calendar.from_ical(cal_text)
 
 today_events = recurring.of(cal).at(date.today())
+# print(today_events)
 events = []
 for event in today_events:
     if event.decoded("dtend") > now:
@@ -55,7 +56,7 @@ elif len(events) >= 2:
         print(pretty_print_current_class(
             events[0]) + events[1].decoded("summary").decode() + " afterwards.")
     else:
-        print(pretty_print_current_class(events[0]) + events[1].decoded("summary").decode() + " after a " +
+        print(pretty_print_current_class(events[0]) + " " + events[1].decoded("summary").decode() + " after a " +
               pretty_print_time_until(events[1].decoded("dtstart") - events[0].decoded("dtend") + now) + " break.")
 else:
     print(pretty_print_current_class(events[0]))
