@@ -13,8 +13,7 @@ dname = os.path.dirname(abspath)
 os.chdir(dname)
 
 # Just an alias
-now = datetime.now(TZ)
-
+now = TZ.localize(datetime.now(), is_dst=False)
 
 def pretty_print_time_until(time):
     delta = time - now
