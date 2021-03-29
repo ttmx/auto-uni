@@ -46,6 +46,7 @@ events.sort(key=lambda x: x.decoded("dtstart"))
 
 # Types of prints
 if len(events) == 0:
+    print() # Print empty line to play well with polybar
     sys.exit(1)
 if events[0].decoded("dtstart") > now:
     print(events[0].decoded("summary").decode() + " in " +
