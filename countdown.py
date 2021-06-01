@@ -43,6 +43,8 @@ for event in today_events:
         events.append(event)
 
 events.sort(key=lambda x: x.decoded("dtstart"))
+# print(now)
+# print(events[0].decoded("dtend"))
 
 # Types of prints
 if len(events) == 0:
@@ -56,7 +58,11 @@ elif len(events) >= 2:
         print(pretty_print_current_class(
             events[0]) + events[1].decoded("summary").decode() + " afterwards.")
     else:
-        print(pretty_print_current_class(events[0]) + " " + events[1].decoded("summary").decode() + " after a " +
-              pretty_print_time_until(events[1].decoded("dtstart") - events[0].decoded("dtend") + now) + " break.")
+        time_between = pretty_print_time_until(events[1].decoded("dtstart") - events[0].decoded("dtend") + now)
+        if time_between == "0m":
+            print(pretty_print_current_class(events[0]) + " " + events[1].decoded("summary").decode() + " right after.")
+        else:
+            print(pretty_print_current_class(events[0]) + " " + events[1].decoded("summary").decode() + " after a " +
+                pretty_print_time_until(events[1].decoded("dtstart") - events[0].decoded("dtend") + now) + " break.")
 else:
     print(pretty_print_current_class(events[0]))

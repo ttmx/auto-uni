@@ -1,3 +1,4 @@
+#!/bin/python3
 import icalendar
 import pytz
 import recurring_ical_events
@@ -7,13 +8,12 @@ import os
 from rofi import rofi
 import requests
 import sys
-from config import CALENDAR_URL
+from config import CALENDAR_URL,TZ
 
 abspath = os.path.abspath(__file__)
 dname = os.path.dirname(abspath)
 os.chdir(dname)
 
-TZ = pytz.timezone("Europe/Lisbon")
 if "-u" in sys.argv:
     cal_text = requests.get(CALENDAR_URL).text
     print("Updated")
@@ -47,7 +47,7 @@ def parse_desc(text):
 classes = []
 has_class = False
 
-events = recurring_ical_events.of(cal).at(datetime.now(TZ))
+events = recurring_ical_events.of(cal).at(datetime.now(TZ) + timedelta(minutes=5))
 for event in events:
     desc, uri_type = parse_desc(event["DESCRIPTION"])
     has_class = True
