@@ -56,7 +56,7 @@ for event in events:
     if uri_type:
         classes.append([event["SUMMARY"] , uri_type, desc])
     elif event["LOCATION"] != "":
-        classes.append([event["LOCATION"] , "Location", ""])
+        classes.append([event["SUMMARY"] , "Location", event["Location"]])
         
 
 
